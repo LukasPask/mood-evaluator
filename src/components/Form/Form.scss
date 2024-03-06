@@ -1,0 +1,28 @@
+@use '../../index.scss';
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20rem;
+  margin: 0 auto;
+  width: 50%;
+  &-mood-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  &-comment {
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: 2rem;
+    & button {
+      background-color: index.$rain-blue-color;
+    }
+  }
+}
