@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction } from 'react';
 import './MoodButton.scss';
 
 type MoodButtonType = {
@@ -9,31 +9,38 @@ type MoodButtonType = {
 };
 
 const MoodButton: React.FC<MoodButtonType> = ({ moodValue, setFormData }) => {
-  const [activeButton, setActiveButton] = useState(0);
-  const activateButton = () => {
-    const activeButtonElement = document.getElementById(
-      `mood-button-${activeButton}`
-    );
+  const activateButton = (id: string) => {
+    const targetButtonElement = document.getElementById(`mood-button-${id}`);
+
     const allButtonElements = document.getElementsByClassName('mood-button');
+    // Remove active button style from all buttons
     Array.from(allButtonElements).map((item: any) =>
       item.classList.remove('active-button')
     );
-    if (activeButton === moodValue) {
-      return activeButtonElement?.classList.add('active-button');
+
+    if (+id === moodValue) {
+      return targetButtonElement?.classList.add('active-button');
     }
   };
   return (
     <div
       id={`mood-button-${moodValue}`}
-      onClick={() => {
-        activateButton();
-        setActiveButton(moodValue);
-        setFormData((prevState) => ({ ...prevState, moodValue: activeButton }));
-      }}
       className='mood-button'
       key={moodValue}
     >
-      <div className='mood-button-evaluation'>{moodValue}</div>
+      <div
+        onClick={(e) => {
+          activateButton((e.target as HTMLElement).id);
+          setFormData((prevState) => ({
+            ...prevState,
+            moodValue: +(e.target as HTMLElement).id,
+          }));
+        }}
+        id={`${moodValue}`}
+        className='mood-button-evaluation'
+      >
+        {moodValue}
+      </div>
     </div>
   );
 };
